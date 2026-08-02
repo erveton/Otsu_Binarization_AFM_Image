@@ -2,13 +2,13 @@
 
 #Access the Height Matrix
 
-image1<-read.table (file = "sample.txt")
+image1<-read.table (file = "random-surface-sample1.txt")
 
-z<-image1[3]
+z<-as.matrix(image1)
 
-Height<-z[[1]]
+#Height<-as.matrix(image1)
 
-y<-sort(Height)
+y<-sort(z)
 
 Otsu<-function(x){
   p<-which(y<x)
@@ -71,8 +71,20 @@ Otsu<-function(x){
 
 h<-mapply(Otsu,y)
 
+hm = h[! h %in% c(NaN, NA)]
+
+hmx = max(hm)
+
+pos_hmx = match(hmx, h)
+
+limiar_otimo = y[pos_hmx]
+
+print(limiar_otimo)
+
 plot(y,h, xlab="Threshold", ylab="η", main="OTSU THRESHOLD")
+
+text(0.065, 0.05, labels=paste("Threshold =", limiar_otimo, sep=" "))
 
 tabela<-data.frame(y,h)
 
-write.table(tabela, "Otsu.txt", row.names = FALSE)
+write.table(tabela, "Results.txt", row.names = FALSE)
