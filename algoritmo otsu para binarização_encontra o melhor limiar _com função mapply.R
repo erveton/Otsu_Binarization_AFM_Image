@@ -6,8 +6,6 @@ image1<-read.table (file = "random-surface-sample1.txt")
 
 z<-as.matrix(image1)
 
-#Height<-as.matrix(image1)
-
 y<-sort(z)
 
 Otsu<-function(x){
